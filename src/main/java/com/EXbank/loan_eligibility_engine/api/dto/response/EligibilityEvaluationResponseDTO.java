@@ -1,0 +1,17 @@
+package com.EXbank.loan_eligibility_engine.api.dto.response;
+
+
+import com.EXbank.loan_eligibility_engine.enums.Verdict;
+
+import java.time.Instant;
+import java.util.List;
+
+/**
+ * Outbound API payload containing the final decision verdict and complete audit trail.
+ */
+public record EligibilityEvaluationResponseDTO(
+        String applicationId,
+        Verdict verdict, // "APPROVED", "DECLINED", "REFER", "COUNTER_OFFER"
+        Instant evaluatedAt,
+        List<ExecutedRuleLogDTO> executedRules
+) {}

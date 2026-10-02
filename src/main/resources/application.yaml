@@ -1,3 +1,4 @@
 spring:
   application:
     name: loan-eligibility-engine
+    server: 8001
