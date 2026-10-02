@@ -1,7 +1,7 @@
 package com.EXbank.loan_eligibility_engine.api.dto.response;
 
 
-import com.EXbank.loan_eligibility_engine.enums.Verdict;
+import com.EXbank.loan_eligibility_engine.domain.enums.DecisionVerdict;
 
 import java.time.Instant;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public record EligibilityEvaluationResponseDTO(
         String applicationId,
-        Verdict verdict, // "APPROVED", "DECLINED", "REFER", "COUNTER_OFFER"
+        DecisionVerdict verdict, // "APPROVED", "DECLINED", "REFER", "COUNTER_OFFER"
         Instant evaluatedAt,
         List<ExecutedRuleLogDTO> executedRules
 ) {}
