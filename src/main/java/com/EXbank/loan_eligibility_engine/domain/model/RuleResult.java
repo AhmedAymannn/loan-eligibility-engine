@@ -6,11 +6,4 @@ public record RuleResult(
         String reasonCode,
         String message
 ) {
-    public static RuleResult pass(String ruleName, String message) {
-        return new RuleResult(ruleName, true, "PASS", message);
-    }
-
-    public static RuleResult fail(String ruleName, String reasonCode, String message) {
-        return new RuleResult(ruleName, false, reasonCode, message);
-    }
 }

@@ -1,4 +1,4 @@
-package com.EXbank.loan_eligibility_engine.domain.Rules;
+package com.EXbank.loan_eligibility_engine.domain.rules;
 
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
 import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
@@ -11,24 +11,27 @@ public class CreditScoreRule implements EligibilityRule {
 
     private final int minCreditScore ;
 
-    public CreditScoreRule(@Value("$eligibility.rules.min-credit-score") int minCreditScore) {
+    public CreditScoreRule(@Value("${eligibility.rules.min-credit-score}") int minCreditScore) {
         this.minCreditScore = minCreditScore;
     }
-
     @Override
     public RuleResult evaluate(EvaluationContext context) {
-        if(context.getCreditScore() < minCreditScore ){
-            return RuleResult.fail(
+        if (context.getCreditScore() < minCreditScore) {
+            return new RuleResult(
                     "CreditScoreRule",
-                    "ERR_UNDERAGE",
-                    "Applicant CreditScoreRule (" + context.getApplicantAge() + ") is below minimum required age of " + minCreditScore
+                    false,
+                    "ERR_LOW_CREDIT_SCORE",
+                    "Applicant credit score (" + context.getCreditScore() + ") is below minimum required score of " + minCreditScore
             );
         }
 
-        return RuleResult.pass(
+        return new RuleResult(
                 "CreditScoreRule",
-                "Applicant meets the minimum CreditScoreRule requirement."
+                true,
+                "CREDIT_SCORE_OK",
+                "Applicant meets the minimum credit score requirement."
         );
     }
+
 }
 

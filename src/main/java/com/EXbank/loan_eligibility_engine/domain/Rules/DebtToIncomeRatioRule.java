@@ -1,39 +1,54 @@
-package com.EXbank.loan_eligibility_engine.domain.Rules;
+package com.EXbank.loan_eligibility_engine.domain.rules;
 
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
 import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
-
+import java.math.RoundingMode;
 
 @Component
-public class DebtToIncomeRatioRule implements EligibilityRule{
+public class DebtToIncomeRatioRule implements EligibilityRule {
 
-    private final BigDecimal maxDti;
+    private final BigDecimal maxDtiRatio;
 
-    public DebtToIncomeRatioRule(@Value("$eligibility.rule.max-dti") BigDecimal maxDti) {
-        this.maxDti = maxDti;
+    public DebtToIncomeRatioRule(
+            @Value("${loan.eligibility.rules.dti.max-ratio:45.0}") BigDecimal maxDtiRatio) {
+        this.maxDtiRatio = maxDtiRatio;
     }
 
     @Override
     public RuleResult evaluate(EvaluationContext context) {
-        if (context.getCalculateDti().compareTo(maxDti) > 0) {
-            return RuleResult.fail(
+        BigDecimal salary = context.getMonthlyNetSalary();
+        BigDecimal debt = context.getExistingMonthlyDebt();
+
+        if (salary == null || salary.compareTo(BigDecimal.ZERO) <= 0) {
+            return new RuleResult(
                     "DebtToIncomeRatioRule",
-                    "ERR_DTI_EXCEEDED",
-                    "Debt-to-Income ratio (" + context.getCalculateDti() + "%) exceeds the maximum limit of " + maxDti + "%"
+                    false,
+                    "DTI_INVALID_SALARY",
+                    "Monthly net salary must be greater than zero"
             );
         }
 
-        // 3. If within limits, return PASS
-        return RuleResult.pass(
+        BigDecimal dtiPercentage = debt.divide(salary, 4, RoundingMode.HALF_UP)
+                .multiply(BigDecimal.valueOf(100))
+                .setScale(2, RoundingMode.HALF_UP);
+
+        if (dtiPercentage.compareTo(maxDtiRatio) > 0) {
+            return new RuleResult(
+                    "DebtToIncomeRatioRule",
+                    false,
+                    "DTI_EXCEEDED",
+                    String.format("Calculated DTI of %s%% exceeds maximum threshold of %s%%", dtiPercentage, maxDtiRatio)
+            );
+        }
+
+        return new RuleResult(
                 "DebtToIncomeRatioRule",
-                "Debt-to-Income ratio (" + context.getCalculateDti() + "%) is within acceptable limits."
+                true,
+                "DTI_OK",
+                String.format("Calculated DTI of %s%% is within allowed limit of %s%%", dtiPercentage, maxDtiRatio)
         );
     }
-
-
-
 }

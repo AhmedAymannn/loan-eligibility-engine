@@ -1,6 +1,6 @@
 package com.EXbank.loan_eligibility_engine.domain.model;
 
-import com.EXbank.loan_eligibility_engine.domain.Rules.EligibilityRule;
+import com.EXbank.loan_eligibility_engine.domain.rules.EligibilityRule;
 import com.EXbank.loan_eligibility_engine.domain.enums.DecisionVerdict;
 import org.springframework.stereotype.Component;
 
@@ -21,20 +21,10 @@ public class DecisionEngine {
         List<RuleResult> auditLog = eligibilityRuleList.stream()
                 .map(rule -> rule.evaluate(context))
                 .toList();
-        // 2. Aggregate verdict: If ANY rule fails, the overall verdict is DECLINED
+        // 2. Aggregate verdict: If any rule failed, verdict is DECLINED
+        boolean hasFailures = auditLog.stream().anyMatch(result -> !result.passed());
+        DecisionVerdict verdict = hasFailures ? DecisionVerdict.DECLINED : DecisionVerdict.APPROVED;
 
-        boolean failed = auditLog
-                .stream()
-                .anyMatch(result->!result.passed());
-
-        DecisionVerdict verdict;
-
-        if(failed){
-           verdict = DecisionVerdict.DECLINED;
-       } else {
-           verdict = DecisionVerdict.APPROVED;
-
-       }
         // 3. Construct and return the aggregated domain evaluation result
         return new EvaluationResult(
                 verdict,

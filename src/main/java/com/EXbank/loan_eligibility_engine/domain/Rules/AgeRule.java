@@ -1,4 +1,4 @@
-package com.EXbank.loan_eligibility_engine.domain.Rules;
+package com.EXbank.loan_eligibility_engine.domain.rules;
 
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
 import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
@@ -9,22 +9,24 @@ import org.springframework.stereotype.Component;
 public class AgeRule implements EligibilityRule {
     private final int minAge;
 
-    public AgeRule(@Value("$eligibility.rules.min-age") int minAge, EvaluationContext context, RuleResult ruleResult) {
+    public AgeRule(@Value("${eligibility.rules.min-age}") int minAge, EvaluationContext context, RuleResult ruleResult) {
         this.minAge = minAge;
     }
-
     @Override
     public RuleResult evaluate(EvaluationContext context) {
         if (context.getApplicantAge() < minAge) {
-            return RuleResult.fail(
+            return new RuleResult(
                     "AgeRule",
+                    false,
                     "ERR_UNDERAGE",
                     "Applicant age (" + context.getApplicantAge() + ") is below minimum required age of " + minAge
             );
         }
 
-        return RuleResult.pass(
+        return new RuleResult(
                 "AgeRule",
+                true,
+                "AGE_OK",
                 "Applicant meets the minimum age requirement."
         );
     }
