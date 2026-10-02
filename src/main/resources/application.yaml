@@ -2,3 +2,10 @@ spring:
   application:
     name: loan-eligibility-engine
     server: 8001
+
+
+  eligibility:
+    rules:
+      min-age: 21
+      min-credit-score: 650
+      max-dti: 45.00
