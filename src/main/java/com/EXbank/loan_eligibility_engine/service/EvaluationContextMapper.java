@@ -29,7 +29,6 @@ public class EvaluationContextMapper {
                 requestDTO.requestedTenureMonths()
         );
     }
-
     private BigDecimal normalizeCurrency(BigDecimal value) {
         if (value == null) {
             return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);

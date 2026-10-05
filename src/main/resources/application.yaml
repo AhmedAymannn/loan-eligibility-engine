@@ -1,11 +1,26 @@
 spring:
   application:
     name: loan-eligibility-engine
-    server: 8001
+
+server:
+  port: 8001
+
+eligibility:
+  rules:
+    min-age: 21
+    min-credit-score: 650
+    max-dti: 45.0
 
 
-  eligibility:
-    rules:
-      min-age: 21
-      min-credit-score: 650
-      max-dti: 45.00
+  # Structural API boundary validation limits
+  validation:
+    national-id-pattern: "^[0-9]{14}$"
+    age:
+      min: 18
+      max: 70
+    credit-score:
+      min: 300
+      max: 850
+    tenure-months:
+      min: 6
+      max: 84

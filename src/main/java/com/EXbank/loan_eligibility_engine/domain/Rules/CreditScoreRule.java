@@ -16,12 +16,12 @@ public class CreditScoreRule implements EligibilityRule {
     }
     @Override
     public RuleResult evaluate(EvaluationContext context) {
-        if (context.getCreditScore() < minCreditScore) {
+        if (context.creditScore() < minCreditScore) {
             return new RuleResult(
                     "CreditScoreRule",
                     false,
                     "ERR_LOW_CREDIT_SCORE",
-                    "Applicant credit score (" + context.getCreditScore() + ") is below minimum required score of " + minCreditScore
+                    "Applicant credit score (" + context.creditScore() + ") is below minimum required score of " + minCreditScore
             );
         }
 

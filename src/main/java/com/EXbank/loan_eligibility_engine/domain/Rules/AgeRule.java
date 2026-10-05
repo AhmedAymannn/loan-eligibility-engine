@@ -14,12 +14,12 @@ public class AgeRule implements EligibilityRule {
     }
     @Override
     public RuleResult evaluate(EvaluationContext context) {
-        if (context.getApplicantAge() < minAge) {
+        if (context.applicantAge() < minAge) {
             return new RuleResult(
                     "AgeRule",
                     false,
                     "ERR_UNDERAGE",
-                    "Applicant age (" + context.getApplicantAge() + ") is below minimum required age of " + minAge
+                    "Applicant age (" + context.applicantAge() + ") is below minimum required age of " + minAge
             );
         }
 

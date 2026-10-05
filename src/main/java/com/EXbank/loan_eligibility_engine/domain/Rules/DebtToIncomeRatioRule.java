@@ -1,5 +1,4 @@
 package com.EXbank.loan_eligibility_engine.domain.rules;
-
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
 import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,8 +18,8 @@ public class DebtToIncomeRatioRule implements EligibilityRule {
 
     @Override
     public RuleResult evaluate(EvaluationContext context) {
-        BigDecimal salary = context.getMonthlyNetSalary();
-        BigDecimal debt = context.getExistingMonthlyDebt();
+        BigDecimal salary = context.monthlyNetSalary();
+        BigDecimal debt = context.existingMonthlyDebt();
 
         if (salary == null || salary.compareTo(BigDecimal.ZERO) <= 0) {
             return new RuleResult(
