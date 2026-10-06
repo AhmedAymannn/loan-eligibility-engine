@@ -4,11 +4,11 @@ package com.EXbank.loan_eligibility_engine.service;
 import com.EXbank.loan_eligibility_engine.api.dto.request.EligibilityEvaluationRequestDTO;
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.UUID;
+
+
 @Component
 public class EvaluationContextMapper {
 
