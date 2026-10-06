@@ -8,7 +8,7 @@ public record ValidationErrorResponseDTO(
         int status,
         String error,
         String message,
-        String path
-//        List<FieldErrorDetail> fieldErrors
+        String path,
+        List<FieldErrorDetail> fieldErrors
 ) {
 }

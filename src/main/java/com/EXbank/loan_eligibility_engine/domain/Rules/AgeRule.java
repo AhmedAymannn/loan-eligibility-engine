@@ -8,12 +8,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class AgeRule implements EligibilityRule {
     private final int minAge;
-
-    public AgeRule(@Value("${eligibility.rules.min-age}") int minAge) {
+    private final int maxMaturityAge;
+    public AgeRule(@Value("${eligibility.rules.min-age}") int minAge,
+                   @Value("${eligibility.rules.max-maturity-age}")  int maxMaturityAge) {
         this.minAge = minAge;
+        this.maxMaturityAge = maxMaturityAge;
     }
     @Override
     public RuleResult evaluate(EvaluationContext context) {
+
+        if (context.applicantAge() <= 0) {
+            return new RuleResult(
+                    "AgeRule",
+                    false,
+                    "ERR_INVALID_AGE",
+                    "Applicant age must be greater than zero."
+            );
+        }
+        // 2. Maximum maturity age check
+        int tenureYears = (context.requestedTenureMonths() + 11) / 12;
+        int ageAtMaturity = context.applicantAge() + tenureYears;
+
+        if (ageAtMaturity > maxMaturityAge) {
+            return new RuleResult(
+                    "AgeRule",
+                    false,
+                    "ERR_EXCEEDS_MATURITY_AGE",
+                    String.format("Applicant age at loan maturity (%d) exceeds the maximum allowed age of %d.",
+                            ageAtMaturity, maxMaturityAge)
+            );
+        }
         if (context.applicantAge() < minAge) {
             return new RuleResult(
                     "AgeRule",

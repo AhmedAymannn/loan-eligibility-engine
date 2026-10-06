@@ -10,6 +10,7 @@ public record EvaluationContext(
         BigDecimal monthlyNetSalary,
         BigDecimal existingMonthlyDebt,
         BigDecimal requestedAmount,
-        int requestedTenureMonths
+        int requestedTenureMonths,
+        int activeLoans
 ) {
 }

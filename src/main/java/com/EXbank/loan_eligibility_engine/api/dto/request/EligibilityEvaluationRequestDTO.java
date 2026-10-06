@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
-
 import java.math.BigDecimal;
+
 
 public record EligibilityEvaluationRequestDTO(
 
@@ -41,6 +41,10 @@ public record EligibilityEvaluationRequestDTO(
         @NotNull(message = "Requested tenure in months is required.")
         @Min(value = 6, message = "Minimum loan tenure is 6 months.")
         @Max(value = 84, message = "Maximum loan tenure is 84 months.")
-        Integer requestedTenureMonths
+        Integer requestedTenureMonths,
+
+        @NotNull(message = "Active loans count is required.")
+        @Min(value = 0, message = "Active loans count cannot be negative.")
+        Integer activeLoans
 ) {
 }

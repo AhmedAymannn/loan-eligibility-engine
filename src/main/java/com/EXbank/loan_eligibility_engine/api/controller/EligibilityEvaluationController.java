@@ -1,6 +1,5 @@
 package com.EXbank.loan_eligibility_engine.api.controller;
 
-
 import com.EXbank.loan_eligibility_engine.api.dto.request.EligibilityEvaluationRequestDTO;
 import com.EXbank.loan_eligibility_engine.api.dto.response.EligibilityEvaluationResponseDTO;
 import com.EXbank.loan_eligibility_engine.application.service.LoanEligibilityService;

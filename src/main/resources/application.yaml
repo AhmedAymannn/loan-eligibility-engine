@@ -8,6 +8,7 @@ server:
 eligibility:
   loan:
     annual-interest-rate: 21.5
+    max-active-loans : 2
   rules:
     min-age: 21
     max-age-at-maturity: 65
@@ -19,6 +20,7 @@ eligibility:
     max-amount: 1000000
     max-income-multiple: 30
     min-residual-income: 3000
+    max-maturity-age: 65
     max-ratio: 45.0
     tier:
       premium-score: 700

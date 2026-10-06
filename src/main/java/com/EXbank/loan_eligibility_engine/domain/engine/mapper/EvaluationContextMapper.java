@@ -26,7 +26,8 @@ public class EvaluationContextMapper {
                 salary,
                 debt,
                 requestedAmount,
-                requestDTO.requestedTenureMonths()
+                requestDTO.requestedTenureMonths(),
+                requestDTO.activeLoans()
         );
     }
     private BigDecimal normalizeCurrency(BigDecimal value) {

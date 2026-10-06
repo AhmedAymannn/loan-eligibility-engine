@@ -18,23 +18,23 @@ public class GlobalExceptionHandler {
             MethodArgumentNotValidException ex,
             HttpServletRequest request) {
 
-//        List<FieldErrorDetail> fieldErrors = ex.getBindingResult()
-//                .getFieldErrors()
-//                .stream()
-//                .map(error -> new FieldErrorDetail(
-//                        error.getField(),
-//                        error.getRejectedValue(),
-//                        error.getDefaultMessage()
-//                ))
-//                .toList();
+        List<FieldErrorDetail> fieldErrors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(error -> new FieldErrorDetail(
+                        error.getField(),
+                        error.getRejectedValue(),
+                        error.getDefaultMessage()
+                ))
+                .toList();
 
         ValidationErrorResponseDTO errorPayload = new ValidationErrorResponseDTO(
                 Instant.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 "Input payload validation failed",
-                request.getRequestURI()
-//                fieldErrors
+                request.getRequestURI(),
+                fieldErrors
         );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorPayload);
