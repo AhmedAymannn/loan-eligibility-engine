@@ -13,7 +13,7 @@ public class DebtToIncomeRatioRule implements EligibilityRule {
     private final InstallmentCalculator installmentCalculator;
 
     public DebtToIncomeRatioRule(
-            @Value("${loan.eligibility.rules.dti.max-ratio:45.0}") BigDecimal maxDtiRatio,
+            @Value("${loan.eligibility.rules.max-ratio}") BigDecimal maxDtiRatio,
             InstallmentCalculator installmentCalculator) {
         this.maxDtiRatio = maxDtiRatio;
         this.installmentCalculator = installmentCalculator;
