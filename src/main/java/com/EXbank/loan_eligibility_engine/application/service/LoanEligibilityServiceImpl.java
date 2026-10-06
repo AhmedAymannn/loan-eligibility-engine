@@ -1,4 +1,4 @@
-package com.EXbank.loan_eligibility_engine.service;
+package com.EXbank.loan_eligibility_engine.application.service;
 
 
 import com.EXbank.loan_eligibility_engine.api.dto.request.EligibilityEvaluationRequestDTO;
@@ -15,7 +15,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Service
-public class LoanEligibilityServiceImpl {
+public class LoanEligibilityServiceImpl implements LoanEligibilityService{
 
     private final EvaluationContextMapper mapper;
     private final DecisionEngine decisionEngine;
@@ -25,7 +25,7 @@ public class LoanEligibilityServiceImpl {
         this.decisionEngine = decisionEngine;
     }
 
-
+    @Override
     public EligibilityEvaluationResponseDTO evaluateEligibility(EligibilityEvaluationRequestDTO requestDTO) {
         // 1. Map DTO to Immutable EvaluationContext (normalizes currency & generates UUID)
         EvaluationContext context = mapper.toDomainContext(requestDTO);
