@@ -26,8 +26,5 @@ public class EligibilityEvaluationController {
 
 
     }
-//    @GetMapping("/{applicationId}")
-//    EligibilityEvaluationResponseDTO evaluations (@RequestParam String applicationId){
-//
-//    }
+
 }

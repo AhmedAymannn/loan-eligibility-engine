@@ -6,21 +6,20 @@ server:
   port: 8001
 
 eligibility:
+  loan:
+    annual-interest-rate: 21.5
   rules:
     min-age: 21
-    min-credit-score: 650
-    max-dti: 45.0
-
-
-  # Structural API boundary validation limits
-  validation:
-    national-id-pattern: "^[0-9]{14}$"
-    age:
-      min: 18
-      max: 70
-    credit-score:
-      min: 300
-      max: 850
-    tenure-months:
-      min: 6
-      max: 84
+    max-age-at-maturity: 65
+    min-credit-score: 600
+    min-salary: 5000
+    min-tenure-months: 12
+    max-tenure-months: 96
+    min-amount: 10000
+    max-amount: 1000000
+    max-income-multiple: 30
+    min-residual-income: 3000
+    max-ratio: 45.0
+    tier:
+      premium-score: 700
+      standard-max-amount: 300000

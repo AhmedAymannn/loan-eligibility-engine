@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class AgeRule implements EligibilityRule {
     private final int minAge;
 
-    public AgeRule(@Value("${eligibility.rules.min-age}") int minAge, EvaluationContext context, RuleResult ruleResult) {
+    public AgeRule(@Value("${eligibility.rules.min-age}") int minAge) {
         this.minAge = minAge;
     }
     @Override

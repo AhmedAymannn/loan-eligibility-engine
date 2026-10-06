@@ -1,16 +1,13 @@
 package com.EXbank.loan_eligibility_engine.application.service;
 
-
 import com.EXbank.loan_eligibility_engine.api.dto.request.EligibilityEvaluationRequestDTO;
 import com.EXbank.loan_eligibility_engine.api.dto.response.EligibilityEvaluationResponseDTO;
-
-import com.EXbank.loan_eligibility_engine.domain.model.DecisionEngine;
+import com.EXbank.loan_eligibility_engine.domain.engine.mapper.EvaluationContextMapper;
+import com.EXbank.loan_eligibility_engine.domain.engine.DecisionEngine;
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationResult;
 import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
-
 import org.springframework.stereotype.Service;
-
 import java.time.Instant;
 import java.util.List;
 
@@ -38,7 +35,7 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService{
         Instant.now(),
         ruleResultList
 );
-
     }
+
 
 }
