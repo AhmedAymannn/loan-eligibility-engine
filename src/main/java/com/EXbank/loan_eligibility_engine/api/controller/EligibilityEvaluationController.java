@@ -1,11 +1,21 @@
 package com.EXbank.loan_eligibility_engine.api.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.EXbank.loan_eligibility_engine.api.dto.response.EligibilityEvaluationResponseDTO;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/eligibility")
 public class EligibilityEvaluationController {
-    
+
+    @PostMapping("")
+    EligibilityEvaluationResponseDTO evaluations (){
+        
+    }
+    @GetMapping("/{applicationId}")
+    EligibilityEvaluationResponseDTO evaluations (@RequestParam String applicationId){
+        return new EligibilityEvaluationResponseDTO(
+
+        )
+    }
 }
