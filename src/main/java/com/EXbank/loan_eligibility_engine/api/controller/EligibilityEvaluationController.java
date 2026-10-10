@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/eligibility")
 public class EligibilityEvaluationController {
 
-
     private final LoanEligibilityService eligibilityService;
 
     public EligibilityEvaluationController(LoanEligibilityService eligibilityService) {

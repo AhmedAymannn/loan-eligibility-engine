@@ -17,10 +17,12 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService{
     private final EvaluationContextMapper mapper;
     private final DecisionEngine decisionEngine;
 
+
     public LoanEligibilityServiceImpl(EvaluationContextMapper mapper, DecisionEngine decisionEngine) {
         this.mapper = mapper;
         this.decisionEngine = decisionEngine;
     }
+
 
     @Override
     public EligibilityEvaluationResponseDTO evaluateEligibility(EligibilityEvaluationRequestDTO requestDTO) {
@@ -36,6 +38,7 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService{
         ruleResultList
 );
     }
+
 
 
 }

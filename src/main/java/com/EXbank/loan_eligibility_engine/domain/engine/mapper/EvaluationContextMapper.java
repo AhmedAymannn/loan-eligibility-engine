@@ -10,7 +10,9 @@ import java.util.UUID;
 
 
 @Component
-public class EvaluationContextMapper {
+public class
+
+EvaluationContextMapper {
 
     public EvaluationContext toDomainContext(EligibilityEvaluationRequestDTO requestDTO) {
         String applicationId = UUID.randomUUID().toString();
