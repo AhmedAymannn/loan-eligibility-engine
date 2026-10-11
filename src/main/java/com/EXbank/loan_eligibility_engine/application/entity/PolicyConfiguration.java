@@ -1,57 +1,57 @@
 package com.EXbank.loan_eligibility_engine.application.entity;
 
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.Immutable;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "policy_configurations")
+@Immutable
 public class PolicyConfiguration {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Represents the unique primary key of a specific policy row in MySQL
 
-    @Column(name = "product_code", nullable = false)
+    @Id
+    private Long id;
+
+    @Column(name = "product_code")
     private String productCode;
 
-    @Column(name = "rule_name", nullable = false)
-    private String ruleName;
+    @Column(name = "min_credit_score")
+    private int minCreditScore;
 
-    @Column(name = "parameter_key", nullable = false)
-    private String parameterKey;
+    @Column(name = "min_age")
+    private int minAge;
 
-    @Column(name = "parameter_value", nullable = false)
-    private String parameterValue;
+    @Column(name = "min_monthly_income")
+    private BigDecimal minMonthlyIncome;
 
     @Column(name = "is_active")
-    private Boolean isActive;
+    private boolean active;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "change_reason")
+    private String changeReason;
 
-    public PolicyConfiguration() {
-    }
+    @Column(name = "created_by")
+    private String createdBy;
 
-    public PolicyConfiguration(Long id, String productCode, String ruleName, String parameterKey,
-                               String parameterValue, Boolean isActive, LocalDateTime updatedAt) {
-        this.id = id;
-        this.productCode = productCode;
-        this.ruleName = ruleName;
-        this.parameterKey = parameterKey;
-        this.parameterValue = parameterValue;
-        this.isActive = isActive;
-        this.updatedAt = updatedAt;
-    }
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    // Getters
-    public Long getId() { return id; }
-    public String getParameterValue() { return parameterValue; }
-    public String getProductCode() { return productCode; }
-    public String getRuleName() { return ruleName; }
-    public String getParameterKey() { return parameterKey; }
-    public Boolean getActive() {return isActive;}
-    public LocalDateTime getUpdatedAt() {return updatedAt;}
+    protected PolicyConfiguration() {}   // required by JPA
 
+    public Long getId()                     { return id; }
+    public String getProductCode()          { return productCode; }
+    public int getMinCreditScore()          { return minCreditScore; }
+    public int getMinAge()                  { return minAge; }
+    public BigDecimal getMinMonthlyIncome() { return minMonthlyIncome; }
+    public boolean isActive()               { return active; }
+    public String getChangeReason()         { return changeReason; }
+    public String getCreatedBy()            { return createdBy; }
+    public LocalDateTime getCreatedAt()     { return createdAt; }
 
 
 }
