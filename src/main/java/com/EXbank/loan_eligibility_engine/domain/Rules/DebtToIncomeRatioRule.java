@@ -1,13 +1,17 @@
 package com.EXbank.loan_eligibility_engine.domain.rules;
+
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
-import com.EXbank.loan_eligibility_engine.domain.rules.Helper.InstallmentCalculator;
 import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
 import com.EXbank.loan_eligibility_engine.domain.model.RuleValues;
+import com.EXbank.loan_eligibility_engine.domain.rules.Helper.InstallmentCalculator;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Component
+@Order(90)
 public class DebtToIncomeRatioRule implements EligibilityRule {
 
     private static final String NAME = "DebtToIncomeRatioRule";
@@ -21,48 +25,51 @@ public class DebtToIncomeRatioRule implements EligibilityRule {
     @Override
     public RuleResult evaluate(EvaluationContext context, RuleValues values) {
 
+        // 1. Guard: salary
         BigDecimal salary = context.monthlyNetSalary();
-
-        // 1. Guard against null/invalid salary
-        if (salary == null || salary.compareTo(BigDecimal.ZERO) <= 0) {
+        if (salary == null || salary.signum() <= 0) {
             return new RuleResult(NAME, false, "DTI_INVALID_SALARY",
                     "Monthly net salary must be greater than zero.");
         }
 
-        // 2. Guard against invalid tenure
-        if (context.requestedTenureMonths() <= 0) {
+        // 2. Guard: tenure must be positive and not beyond the policy maximum
+        //    (the policy limit itself is reported by TenureRule)
+        int tenure = context.requestedTenureMonths();
+        if (tenure <= 0 || tenure > values.maxTenureMonths()) {
             return new RuleResult(NAME, false, "DTI_INVALID_TENURE",
-                    "Requested loan tenure must be greater than zero.");
+                    "Requested loan tenure must be between 1 and " + values.maxTenureMonths()
+                            + " months to calculate the DTI.");
         }
 
-        // 3. NEW: guard against invalid amount (the calculator now throws instead of returning 0)
+        // 3. Guard: amount
         BigDecimal amount = context.requestedAmount();
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+        if (amount == null || amount.signum() <= 0) {
             return new RuleResult(NAME, false, "DTI_INVALID_AMOUNT",
                     "Requested loan amount must be greater than zero.");
         }
 
-        // 4. Safe null-handling for existing debt
+        // 4. Existing debt: missing means none, negative is invalid
         BigDecimal debt = context.existingMonthlyDebt() != null
                 ? context.existingMonthlyDebt()
                 : BigDecimal.ZERO;
+        if (debt.signum() < 0) {
+            return new RuleResult(NAME, false, "DTI_INVALID_DEBT",
+                    "Existing monthly debt cannot be negative.");
+        }
 
-        // 5. CHANGED: the interest rate now comes from the policy snapshot
+        // 5. New installment, priced with the policy's interest rate
         final BigDecimal newInstallment = installmentCalculator.calculateMonthlyInstallment(
-                amount,
-                context.requestedTenureMonths(),
-                values.annualInterestRate()
-        );
+                amount, tenure, values.annualInterestRate());
 
-        // 6. Sum total obligations (existing debt + new installment) FIRST
+        // 6. Total obligations (existing debt + new installment)
         final BigDecimal totalMonthlyDebt = debt.add(newInstallment);
 
-        // 7. CHANGED: one calculation, rounded UP, so a borderline value never rounds in the applicant's favor
+        // 7. DTI percentage, rounded UP so a borderline value never rounds in the applicant's favor
         BigDecimal dtiPercentage = totalMonthlyDebt
                 .multiply(BigDecimal.valueOf(100))
                 .divide(salary, 2, RoundingMode.UP);
 
-        // 8. Evaluate against the threshold from the policy
+        // 8. Compare with the policy threshold
         if (dtiPercentage.compareTo(values.maxDtiPercent()) > 0) {
             return new RuleResult(NAME, false, "DTI_EXCEEDED",
                     String.format("Calculated DTI of %s%% (incl. new installment %s) exceeds maximum threshold of %s%%",

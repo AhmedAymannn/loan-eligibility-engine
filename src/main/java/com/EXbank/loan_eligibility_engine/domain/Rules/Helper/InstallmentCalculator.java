@@ -1,23 +1,29 @@
 package com.EXbank.loan_eligibility_engine.domain.rules.Helper;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+
 @Component
 public class InstallmentCalculator {
 
     public BigDecimal calculateMonthlyInstallment(BigDecimal principal,
                                                   int months,
                                                   BigDecimal annualRatePercent) {
-        // Guard clause for invalid inputs
-        if (principal == null || principal.compareTo(BigDecimal.ZERO) <= 0 || months <= 0) {
-            return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+        if (principal == null || principal.signum() <= 0) {
+            throw new IllegalArgumentException("principal must be positive");
+        }
+        if (months <= 0) {
+            throw new IllegalArgumentException("months must be positive");
+        }
+        if (annualRatePercent == null || annualRatePercent.signum() < 0) {
+            throw new IllegalArgumentException("annualRatePercent must be zero or positive");
         }
 
-        // 0% interest fallback -> simple principal division (P / n)
-        if (annualRatePercent == null || annualRatePercent.signum() == 0) {
+        // explicit 0% interest -> simple principal division (P / n)
+        if (annualRatePercent.signum() == 0) {
             return principal.divide(BigDecimal.valueOf(months), 2, RoundingMode.HALF_UP);
         }
 
