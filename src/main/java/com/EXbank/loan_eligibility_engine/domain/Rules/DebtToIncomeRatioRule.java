@@ -2,6 +2,7 @@ package com.EXbank.loan_eligibility_engine.domain.rules;
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
 import com.EXbank.loan_eligibility_engine.domain.model.Helper.InstallmentCalculator;
 import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
+import com.EXbank.loan_eligibility_engine.domain.model.RuleValues;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
@@ -20,7 +21,7 @@ public class DebtToIncomeRatioRule implements EligibilityRule {
     }
 
     @Override
-    public RuleResult evaluate(EvaluationContext context) {
+    public RuleResult evaluate(EvaluationContext context , RuleValues values) {
 
         BigDecimal salary = context.monthlyNetSalary();
 

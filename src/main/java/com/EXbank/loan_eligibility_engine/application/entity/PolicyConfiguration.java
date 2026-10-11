@@ -1,12 +1,8 @@
 package com.EXbank.loan_eligibility_engine.application.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Immutable;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity

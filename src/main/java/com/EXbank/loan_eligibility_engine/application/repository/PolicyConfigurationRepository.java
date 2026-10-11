@@ -2,12 +2,11 @@ package com.EXbank.loan_eligibility_engine.application.repository;
 
 
 import com.EXbank.loan_eligibility_engine.application.entity.PolicyConfiguration;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.Repository;
+import java.util.Optional;
 
-@Repository
-public interface PolicyConfigurationRepository extends JpaRepository < PolicyConfiguration, Long > {
+public interface PolicyConfigurationRepository extends Repository <PolicyConfiguration, Long> {
 
-
+    Optional <PolicyConfiguration> findByProductCodeWhereActiveIsTrue (String productCode) ;
 
 }

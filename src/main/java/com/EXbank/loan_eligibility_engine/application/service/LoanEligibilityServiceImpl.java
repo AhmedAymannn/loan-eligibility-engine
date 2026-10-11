@@ -7,6 +7,7 @@ import com.EXbank.loan_eligibility_engine.domain.engine.DecisionEngine;
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
 import com.EXbank.loan_eligibility_engine.domain.model.EvaluationResult;
 import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
+import com.EXbank.loan_eligibility_engine.domain.model.RuleValues;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
@@ -16,11 +17,12 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService{
 
     private final EvaluationContextMapper mapper;
     private final DecisionEngine decisionEngine;
+    private final PolicyServiceImp policyServiceImp ;
 
-
-    public LoanEligibilityServiceImpl(EvaluationContextMapper mapper, DecisionEngine decisionEngine) {
+    public LoanEligibilityServiceImpl(EvaluationContextMapper mapper, DecisionEngine decisionEngine, PolicyServiceImp policyServiceImp) {
         this.mapper = mapper;
         this.decisionEngine = decisionEngine;
+        this.policyServiceImp = policyServiceImp;
     }
 
 
@@ -28,7 +30,9 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService{
     public EligibilityEvaluationResponseDTO evaluateEligibility(EligibilityEvaluationRequestDTO requestDTO) {
         // 1. Map DTO to Immutable EvaluationContext (normalizes currency & generates UUID)
         EvaluationContext context = mapper.toDomainContext(requestDTO);
-        EvaluationResult evaluationResult = decisionEngine.evaluateAll(context);
+        //  call the service and pass the values to evaluate
+        RuleValues values = policyServiceImp.getRuleValues(requestDTO.productCode());
+        EvaluationResult evaluationResult = decisionEngine.evaluateAll(context , values);
         List <RuleResult> ruleResultList = evaluationResult.auditLog();
 
         return new EligibilityEvaluationResponseDTO(
