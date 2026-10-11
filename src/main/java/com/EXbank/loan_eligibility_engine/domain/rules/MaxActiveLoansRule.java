@@ -6,35 +6,21 @@ import com.EXbank.loan_eligibility_engine.domain.model.RuleValues;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class MaxActiveLoansRule implements EligibilityRule {
 
-    private final int maxActiveLoans;
-
-    public MaxActiveLoansRule(@Value("${eligibility.loan.max-active-loans}") int maxActiveLoans) {
-        this.maxActiveLoans = maxActiveLoans;
-    }
+    private static final String NAME = "MaxActiveLoansRule";
 
     @Override
-    public RuleResult evaluate(EvaluationContext context , RuleValues values){
+    public RuleResult evaluate(EvaluationContext context, RuleValues values) {
 
-        if (context.activeLoans() > maxActiveLoans) {
-            return new RuleResult(
-                    "MaxActiveLoansRule",
-                    false,
-                    "MAX_LOANS_EXCEEDED",
+        if (context.activeLoans() > values.maxActiveLoans()) {
+            return new RuleResult(NAME, false, "MAX_LOANS_EXCEEDED",
                     String.format("Applicant currently has %d active loans. Maximum allowed is %d.",
-                            context.activeLoans(), maxActiveLoans)
-            );
-
+                            context.activeLoans(), values.maxActiveLoans()));
         }
-    return new RuleResult(
-            "MaxActiveLoansRule",
-            true,
-            "ACTIVE_LOANS_OK",
-            "Active loan count is within allowable threshold."
-    );
-    }
 
+        return new RuleResult(NAME, true, "ACTIVE_LOANS_OK",
+                "Active loan count is within allowable threshold.");
+    }
 }

@@ -18,7 +18,6 @@ public record EligibilityEvaluationRequestDTO(
         String productCode,
 
 
-
         @NotNull(message = "Applicant age is required.")
         @Min(value = 18, message = "Applicant must be at least 18 years old.")
         @Max(value = 70, message = "Applicant age cannot exceed 70 years.")

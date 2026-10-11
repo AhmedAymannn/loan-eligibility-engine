@@ -7,32 +7,23 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 
+
 @Component
+
 public class CreditScoreRule implements EligibilityRule {
 
-    private final int minCreditScore ;
+    private static final String NAME = "CreditScoreRule";
 
-    public CreditScoreRule(@Value("${eligibility.rules.min-credit-score}") int minCreditScore) {
-        this.minCreditScore = minCreditScore;
-    }
     @Override
-    public RuleResult evaluate(EvaluationContext context , RuleValues values) {
-        if (context.creditScore() < minCreditScore) {
-            return new RuleResult(
-                    "CreditScoreRule",
-                    false,
-                    "ERR_LOW_CREDIT_SCORE",
-                    "Applicant credit score (" + context.creditScore() + ") is below minimum required score of " + minCreditScore
-            );
+    public RuleResult evaluate(EvaluationContext context, RuleValues values) {
+
+        if (context.creditScore() < values.minCreditScore()) {
+            return new RuleResult(NAME, false, "ERR_LOW_CREDIT_SCORE",
+                    "Applicant credit score (" + context.creditScore()
+                            + ") is below minimum required score of " + values.minCreditScore());
         }
 
-        return new RuleResult(
-                "CreditScoreRule",
-                true,
-                "CREDIT_SCORE_OK",
-                "Applicant meets the minimum credit score requirement."
-        );
+        return new RuleResult(NAME, true, "CREDIT_SCORE_OK",
+                "Applicant meets the minimum credit score requirement.");
     }
-
 }
-
