@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Component
-@Order(100)
 public class ResidualIncomeRule implements EligibilityRule {
 
     private static final String NAME = "ResidualIncomeRule";

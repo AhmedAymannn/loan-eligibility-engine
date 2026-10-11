@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class PolicyServiceImp implements PolicyServiceProvider {
 
-
     private final PolicyConfigurationRepository policyConfigurationRepository;
 
     public PolicyServiceImp(PolicyConfigurationRepository policyConfigurationRepository) {
@@ -24,10 +23,21 @@ public class PolicyServiceImp implements PolicyServiceProvider {
                 findByProductCodeWhereActiveIsTrue(productCodeUpperCased).orElseThrow();
 
         return new RuleValues(
-                policy.getMinCreditScore(),
                 policy.getMinAge(),
-                policy.getMinMonthlyIncome()
-
+                policy.getMaxMaturityAge(),
+                policy.getMinCreditScore(),
+                policy.getMinMonthlyIncome(),
+                policy.getMinResidualIncome(),
+                policy.getMaxDtiPercent(),
+                policy.getMaxIncomeMultiple(),
+                policy.getMaxActiveLoans(),
+                policy.getMinTenureMonths(),
+                policy.getMaxTenureMonths(),
+                policy.getMinAmount(),
+                policy.getMaxAmount(),
+                policy.getAnnualInterestRate(),
+                policy.getTierPremiumScore(),
+                policy.getTierStandardMaxAmount()
         );
     }
 }

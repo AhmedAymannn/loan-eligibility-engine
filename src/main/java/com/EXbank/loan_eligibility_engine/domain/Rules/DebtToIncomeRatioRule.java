@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Component
-@Order(90)
 public class DebtToIncomeRatioRule implements EligibilityRule {
 
     private static final String NAME = "DebtToIncomeRatioRule";
