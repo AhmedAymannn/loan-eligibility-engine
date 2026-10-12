@@ -10,7 +10,6 @@ public record EvaluationResult(
         String applicationId,
         List<RuleResult> auditLog
 ) {
-    // Compact constructor to guarantee immutability of the collection
     public EvaluationResult {
         auditLog = List.copyOf(auditLog);
     }

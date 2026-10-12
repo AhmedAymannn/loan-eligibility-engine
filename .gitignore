@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Test###
+src/test/results.json
+/src/test/eligibility-logic-tests-v2.postman_collection.json
