@@ -1,5 +1,6 @@
 package com.EXbank.loan_eligibility_engine.api.exception;
 
+import com.EXbank.loan_eligibility_engine.api.dto.response.ErrorResponseDTO;
 import com.EXbank.loan_eligibility_engine.api.dto.response.FieldErrorDetail;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.EXbank.loan_eligibility_engine.api.dto.response.ValidationErrorResponseDTO;
@@ -38,5 +39,20 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorPayload);
+    }
+
+    @ExceptionHandler(ProductCodeNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleNotFound(
+            ProductCodeNotFoundException ex,
+            HttpServletRequest request) {
+
+        ErrorResponseDTO body = new ErrorResponseDTO(
+                Instant.now(),
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
 }

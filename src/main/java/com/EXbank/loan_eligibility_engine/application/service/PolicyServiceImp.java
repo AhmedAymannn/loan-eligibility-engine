@@ -1,6 +1,7 @@
 package com.EXbank.loan_eligibility_engine.application.service;
 
 
+import com.EXbank.loan_eligibility_engine.api.exception.ProductCodeNotFoundException;
 import com.EXbank.loan_eligibility_engine.application.entity.PolicyConfiguration;
 import com.EXbank.loan_eligibility_engine.application.repository.PolicyConfigurationRepository;
 import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleValues;
@@ -19,7 +20,8 @@ public class PolicyServiceImp implements PolicyServiceProvider {
     public RuleValues getRuleValues(String productCode) {
         String productCodeUpperCased = productCode.toUpperCase();
 
-        PolicyConfiguration policy = policyConfigurationRepository.findByProductCodeAndActiveIsTrue(productCodeUpperCased).orElseThrow();
+        PolicyConfiguration policy = policyConfigurationRepository
+                .findByProductCodeAndActiveIsTrue(productCodeUpperCased).orElseThrow(()->new ProductCodeNotFoundException(productCodeUpperCased));
 
         return new RuleValues(
                 policy.getMinAge(),
