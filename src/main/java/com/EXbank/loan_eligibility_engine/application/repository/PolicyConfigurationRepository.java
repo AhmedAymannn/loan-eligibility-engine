@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface PolicyConfigurationRepository extends Repository <PolicyConfiguration, Long> {
 
-    Optional <PolicyConfiguration> findByProductCodeWhereActiveIsTrue (String productCode) ;
+    Optional <PolicyConfiguration> findByProductCodeAndActiveIsTrue (String productCode) ;
 
 }

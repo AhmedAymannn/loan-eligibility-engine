@@ -2,11 +2,10 @@ spring:
   application:
     name: loan-eligibility-engine
   datasource:
-    url: jdbc:mysql://localhost:3307/eligibility_policy_Configuration_V1?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3307/eligibility_policy_Configuration_V1?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
     username: eligibility_reader
     password: reader_secure_pass
     driver-class-name: com.mysql.cj.jdbc.Driver
-
     jpa:
       hibernate:
         ddl-auto: none

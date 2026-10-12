@@ -19,8 +19,7 @@ public class PolicyServiceImp implements PolicyServiceProvider {
     public RuleValues getRuleValues(String productCode) {
         String productCodeUpperCased = productCode.toUpperCase();
 
-        PolicyConfiguration policy = policyConfigurationRepository.
-                findByProductCodeWhereActiveIsTrue(productCodeUpperCased).orElseThrow();
+        PolicyConfiguration policy = policyConfigurationRepository.findByProductCodeAndActiveIsTrue(productCodeUpperCased).orElseThrow();
 
         return new RuleValues(
                 policy.getMinAge(),
