@@ -1,7 +1,7 @@
 package com.EXbank.loan_eligibility_engine.domain.rules;
-import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
-import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
-import com.EXbank.loan_eligibility_engine.domain.model.RuleValues;
+import com.EXbank.loan_eligibility_engine.domain.model.evaluationContext.EvaluationContext;
+import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleResult;
+import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleValues;
 
 public interface EligibilityRule {
 

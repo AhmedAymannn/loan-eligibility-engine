@@ -1,4 +1,4 @@
-package com.EXbank.loan_eligibility_engine.domain.model;
+package com.EXbank.loan_eligibility_engine.domain.model.evaluationContext;
 
 import java.math.BigDecimal;
 

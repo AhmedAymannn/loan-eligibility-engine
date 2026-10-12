@@ -1,6 +1,7 @@
-package com.EXbank.loan_eligibility_engine.domain.model;
+package com.EXbank.loan_eligibility_engine.domain.model.evaluationContext;
 
 import com.EXbank.loan_eligibility_engine.domain.enums.DecisionVerdict;
+import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleResult;
 
 import java.util.List;
 

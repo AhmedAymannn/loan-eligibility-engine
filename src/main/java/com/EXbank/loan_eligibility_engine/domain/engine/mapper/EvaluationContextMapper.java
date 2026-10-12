@@ -2,7 +2,7 @@ package com.EXbank.loan_eligibility_engine.domain.engine.mapper;
 
 
 import com.EXbank.loan_eligibility_engine.api.dto.request.EligibilityEvaluationRequestDTO;
-import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
+import com.EXbank.loan_eligibility_engine.domain.model.evaluationContext.EvaluationContext;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;

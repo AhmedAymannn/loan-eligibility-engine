@@ -1,9 +1,8 @@
 package com.EXbank.loan_eligibility_engine.domain.rules;
 
-import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
-import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
-import com.EXbank.loan_eligibility_engine.domain.model.RuleValues;
-import org.springframework.core.annotation.Order;
+import com.EXbank.loan_eligibility_engine.domain.model.evaluationContext.EvaluationContext;
+import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleResult;
+import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleValues;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

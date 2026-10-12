@@ -4,10 +4,10 @@ import com.EXbank.loan_eligibility_engine.api.dto.request.EligibilityEvaluationR
 import com.EXbank.loan_eligibility_engine.api.dto.response.EligibilityEvaluationResponseDTO;
 import com.EXbank.loan_eligibility_engine.domain.engine.mapper.EvaluationContextMapper;
 import com.EXbank.loan_eligibility_engine.domain.engine.DecisionEngine;
-import com.EXbank.loan_eligibility_engine.domain.model.EvaluationContext;
-import com.EXbank.loan_eligibility_engine.domain.model.EvaluationResult;
-import com.EXbank.loan_eligibility_engine.domain.model.RuleResult;
-import com.EXbank.loan_eligibility_engine.domain.model.RuleValues;
+import com.EXbank.loan_eligibility_engine.domain.model.evaluationContext.EvaluationContext;
+import com.EXbank.loan_eligibility_engine.domain.model.evaluationContext.EvaluationResult;
+import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleResult;
+import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleValues;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
