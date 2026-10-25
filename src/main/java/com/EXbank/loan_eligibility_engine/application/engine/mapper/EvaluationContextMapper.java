@@ -1,4 +1,4 @@
-package com.EXbank.loan_eligibility_engine.domain.engine.mapper;
+package com.EXbank.loan_eligibility_engine.application.engine.mapper;
 
 
 import com.EXbank.loan_eligibility_engine.api.dto.request.EligibilityEvaluationRequestDTO;

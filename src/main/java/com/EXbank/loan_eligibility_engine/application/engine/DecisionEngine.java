@@ -1,10 +1,10 @@
-package com.EXbank.loan_eligibility_engine.domain.engine;
+package com.EXbank.loan_eligibility_engine.application.engine;
 
 import com.EXbank.loan_eligibility_engine.domain.model.evaluationContext.EvaluationContext;
 import com.EXbank.loan_eligibility_engine.domain.model.evaluationContext.EvaluationResult;
 import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleResult;
 import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleValues;
-import com.EXbank.loan_eligibility_engine.domain.rules.EligibilityRule;
+import com.EXbank.loan_eligibility_engine.application.rules.EligibilityRule;
 import com.EXbank.loan_eligibility_engine.domain.enums.DecisionVerdict;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.EXbank.loan_eligibility_engine.domain.rules.Helper;
+package com.EXbank.loan_eligibility_engine.application.rules.Helper;
 
 import org.springframework.stereotype.Component;
 

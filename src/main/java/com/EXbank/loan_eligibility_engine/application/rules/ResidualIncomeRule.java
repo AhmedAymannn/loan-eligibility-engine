@@ -1,7 +1,7 @@
-package com.EXbank.loan_eligibility_engine.domain.rules;
+package com.EXbank.loan_eligibility_engine.application.rules;
 
 import com.EXbank.loan_eligibility_engine.domain.model.evaluationContext.EvaluationContext;
-import com.EXbank.loan_eligibility_engine.domain.rules.Helper.InstallmentCalculator;
+import com.EXbank.loan_eligibility_engine.application.rules.Helper.InstallmentCalculator;
 import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleResult;
 import com.EXbank.loan_eligibility_engine.domain.model.ruleContext.RuleValues;
 import org.springframework.stereotype.Component;
