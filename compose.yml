@@ -1,0 +1,26 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: container-yard-mysql
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: loan-eligibility-engine
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8001:8001"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/eligibility_policy_Configuration_V1?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: eligibility_reader
+      SPRING_DATASOURCE_PASSWORD: reader_secure_pass
+
+volumes:
+  mysql-data:
+    external: true
+    name:  container-yard-allocation-service_mysql_data
