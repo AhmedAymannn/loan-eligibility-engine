@@ -6,10 +6,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: eligibility_policy_Configuration_V1
-      MYSQL_USER: eligibility_reader
-      MYSQL_PASSWORD: reader_secure_pass
     ports:
       - "3307:3306"
+    volumes:
+      - loan_mysql_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
       interval: 5s
@@ -30,3 +30,6 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/eligibility_policy_Configuration_V1?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: eligibility_reader
       SPRING_DATASOURCE_PASSWORD: reader_secure_pass
+
+volumes:
+  loan_mysql_data:
